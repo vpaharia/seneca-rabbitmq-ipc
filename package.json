@@ -1,6 +1,6 @@
 {
   "name": "seneca-rabbitmq-ipc-transport",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.0",
   "description": "Seneca RabbitMQ IPC transport",
   "main": "rabbitmq_ipc.js",
   "repository": {
@@ -18,7 +18,7 @@
     "amqp",
     "inter-process communication"
   ],
-  "author": "Vivek Paharia",
+  "author": "Vivek Paharia (vivek.paharia@sap.com)",
   "license": "MIT",
   "dependencies": {
     "amqplib": "~0.2.1",

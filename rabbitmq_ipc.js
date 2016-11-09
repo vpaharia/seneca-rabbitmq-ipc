@@ -4,14 +4,14 @@ var amqp = require('amqplib/callback_api');
 //seneca transport plugin for ipc
 module.exports = function( options ) {
   var seneca = this;
-  var plugin = 'rabbitmq_ipc';
+  var plugin = 'seneca-rabbitmq-ipc-transport';
 
   var so = seneca.options();
 
   options = seneca.util.deepextend(
     {
       rabbitmq_ipc: {
-        type: 'rabbitmq_ipc',
+        type: 'seneca-rabbitmq-ipc-transport',
         url: 'amqp://localhost',
      		exchange: 'edge_ipc',
         socketoptions: {}
@@ -22,8 +22,8 @@ module.exports = function( options ) {
 
   var tu = seneca.export('transport/utils');
 
-  seneca.add({role:'transport',hook:'listen',type:'rabbitmq_ipc'}, hook_listen_rabbitmq);
-  seneca.add({role:'transport',hook:'client',type:'rabbitmq_ipc'}, hook_client_rabbitmq);
+  seneca.add({role:'transport',hook:'listen',type:'seneca-rabbitmq-ipc-transport'}, hook_listen_rabbitmq);
+  seneca.add({role:'transport',hook:'client',type:'seneca-rabbitmq-ipc-transport'}, hook_client_rabbitmq);
 
 	//create ipc queue per process, bind it to exchange with its process id and start listening on it
   function hook_listen_rabbitmq( args, done ) {
@@ -108,30 +108,16 @@ module.exports = function( options ) {
 
           seneca.log.debug('client', 'exchange', ex, client_options, seneca);
 
-          // Subscribe only sending messages no response handling
-					//channel.consume(restopic, function ( message ) {
-            //var content = message.content ? message.content.toString() : undefined
-            //var input = tu.parseJSON(seneca,'client-'+type,content)
-
-            //channel.ack(message)
-
-            //tu.handle_response( seneca, input, client_options )
-          //})
+          // Subscribe: only sending messages no response handling
 
           // Publish
           send_done( null, function ( args, done ) {
-	          //var str = args.pin;
-	          //args.pin = str.match(/cmd:.+,/)?str.replace(/cmd:.+,/,"cmd:receive,"):str.replace(/cmd:.*.$/,"cmd:receive");
 	          args.cmd='receive';
             var outmsg = tu.prepare_request( this, args, done );
             var outstr = tu.stringifyJSON( seneca, 'client-'+type, outmsg );
-            //channel.sendToQueue(acttopic, new Buffer(outstr));
             var processId = args.processId;
-            console.log('in send_done with processid '+processId);
             channel.publish(ex, processId.toString(),new Buffer(outstr));
         		done(null,{response:'message send'});
-            //var input = tu.parseJSON(seneca, 'client'+type, undefined);
-            //tu.handle_response( seneca, input, client_options );
           });
 
           seneca.add('role:seneca,cmd:close',function( close_args, done ) {
@@ -142,7 +128,6 @@ module.exports = function( options ) {
           });
 
         }
-        //client_done();
       });
     });
   }
@@ -151,6 +136,3 @@ module.exports = function( options ) {
     name: plugin,
   };
 };
-
-//this.act('role:ipc,cmd:process',{processId:<find out  process id>,data:<data>},function())
-//this.add('role:ipc,cmd:process',function())

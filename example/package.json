@@ -1,0 +1,24 @@
+{
+  "name": "seneca-rabbitmq-ipc-transport-example",
+  "version": "1.0.0",
+  "description": "Seneca RabbitMQ IPC transport example",
+  "main": "app.js",
+  "keywords": [
+    "seneca",
+    "transport",
+    "plugin",
+    "rabbitmq",
+    "amqp",
+    "inter-process communication"
+  ],
+  "author": "Vivek Paharia",
+  "license": "MIT",
+  "dependencies": {
+    "seneca": "~3.2.2",
+    "seneca-rabbitmq-ipc-transport": "1.0.0"
+  },
+  "files": [
+    "README.md",
+    "app.js"
+  ]
+}

@@ -7,23 +7,23 @@ Messages are send between processes by sending messages to RabbitMQ exchange whi
 
 ### Install
 
-Not on npm yet
-Download and npm install
+npm install seneca-rabbitmq-ipc-transport
+
 You'll also need [RabbitMQ](http://www.rabbitmq.com)
 
 ## Example
 
 ```js
 var seneca = require('seneca')()
-  .use('rabbitmq_ipc')
+  .use('seneca-rabbitmq-ipc-transport')
   .client({
-    type: 'rabbitmq_ipc',
+    type: 'seneca-rabbitmq-ipc-transport',
     url: rabbitMQuri,
     exchange: 'edge_ipc',
     pin:'role:ipc,cmd:send'
   })
   .listen({
-    type: 'rabbitmq_ipc',
+    type: 'seneca-rabbitmq-ipc-transport',
     url: rabbitMQuri,
     exchange: 'edge_ipc',
     processId: process.pid,
@@ -31,6 +31,7 @@ var seneca = require('seneca')()
   })
   .add('role:ipc,cmd:receive',function(msg, respond){
     console.log(msg);
+    return respond(null,{});
   });
 
 send message by
