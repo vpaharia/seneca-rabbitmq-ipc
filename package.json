@@ -5,10 +5,10 @@
   "main": "rabbitmq_ipc.js",
   "repository": {
     "type": "git",
-    "url": "https://github.wdf.sap.corp/nodems/seneca-rabbitmq-transport.git"
+    "url": "https://github.com/pahariavivek/seneca-rabbitmq-ipc.git"
   },
   "bugs": {
-    "url": "https://github.wdf.sap.corp/nodems/seneca-rabbitmq-transport/issues"
+    "url": "https://github.com/pahariavivek/seneca-rabbitmq-ipc/issues"
   },
   "keywords": [
     "seneca",
